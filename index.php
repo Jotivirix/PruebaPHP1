@@ -57,12 +57,14 @@
     
         function chequeaPass(){
             var _usuario_nombre = $('#usuario_nombre').val();
-            var _usuario_clave = $('#usuario_clave').val();
+            var _usuario_clave = $('#usuario_clave').val();            
             
             $('#centro').load('login.php',{
                 usuario_nombre : _usuario_nombre,
                 usuario_clave : _usuario_clave
             });
+            
+            //$('body').css('background','white');
             
         };
     
