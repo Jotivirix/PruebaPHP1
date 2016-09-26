@@ -64,7 +64,6 @@
                 usuario_clave : _usuario_clave
             });
             
-            //$('body').css('background','white');
             
         };
     
