@@ -1,3 +1,9 @@
+<?php
+//ahora session start continúa la sesión que creamos en login.php
+if (!isset($_SESSION) ) {session_start();}
+//leo lo que guardé en la variable Nombre
+$nombre = $_SESSION['nombre'];
+?>
 <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -7,14 +13,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Histología</a>
+          <a class="navbar-brand" href="#">Prácticas Histología</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="#"><?php echo $nombre;?></a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li class="dropdown"><ul class="dropdown-menu">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
                 <li><a href="#">Action</a></li>
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
@@ -26,10 +34,49 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./"><?php echo $usuario_nombre ?> <span class="sr-only">(current)</span></a></li>
+              <img src="imagenes/<?php echo $_SESSION['dni'];?>.jpg" 
+                   class="img-circle" style="width:60px;padding:15px;">
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+
+<?php
+    // ejemplo de volcado de una query a un array en php
+    //creo el array
+    $usuarios = array();
+    //hago la consulta a la BBDD
+    $consulta_usuarios = $mysqli -> query ("select * from usuario");
+    //saco el numero de usuarios que hay en la bbdd
+    $num_usuarios = $consulta_usuarios -> num_rows;
+    //monto un bucle for para cargar en el array los resultados de la query
+    for ($i = 0; $i < $num_usuarios; $i++){
+        $r = $consulta_usuarios -> fetch_array();
+        $usuarios[$i][0] = $r['dni'];
+        $usuarios[$i][1] = $r['nombre'];
+        $usuarios[$i][2] = $r['apellido'];
+        $usuarios[$i][3] = $r['email'];
+    }
+    //ahora voy a usar los datos en un ejemplo
+    ?>
+    <table class="table  table-condensed table-bordered" style="background-color: white;">
+        <?php
+        for ($i = 0; $i < $num_usuarios; $i++){
+            echo '<tr>';
+            echo '<td>'.$usuarios[$i][1].'</td>';
+            echo '<td>'.$usuarios[$i][2].'</td>';
+            echo '<td>'.$usuarios[$i][3].'</td>';
+            echo '<td><img src="imagenes/'.$usuarios[$i][0].'.jpg" style="width:80px"></td>';
+            echo '</tr>';
+        }
+        ?>
+</table>
+</div>

@@ -7,7 +7,7 @@
             body{
                 background: black;
                 background-image: url("img/tile2.jpeg");
-                color: white;
+                /*color: white;*/
             } 
         </style>
     </head>
